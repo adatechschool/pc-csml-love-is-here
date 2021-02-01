@@ -1,20 +1,25 @@
 start:
-  say "Coucou !"
-  goto name
-
-name:
-  say "Comment tu t'appelles ?"
-  hold 
-  remember name = event
-  goto penduInit
-
+    say Typing(1000)
+    say "Hello, comment t'appelles tu ?"
+    hold
+    remember username = event
+say Typing(1000)
+say Question(
+    "Bonjour {{username}}, veux tu jouer au pendu avec moi ?",
+    buttons=[Button("Yes"), Button("Non")])
+    hold
+  if (event == "Yes") {
+      say "C'est parti!"
+      goto penduInit
+  }else{
+       say "Oh le mauvais joueur!"
+  }
 
 
 penduInit:
   say "Je choisis un mot ... "
-  say "C'est parti !"
-
-  remember mot = "P A P I L L O N" // mot au hasard 
+  do listeMot = ["C U I S I N E", "C H A T B O T", "O R D I N A T E U R", "A E R O P O R T", "P A P I L L O N"]
+  remember mot = OneOf(listeMot) // mot au hasard 
 
   do mot = mot.split(" ")  //fait un tableau en coupant aux espaces
   remember motVide = []
@@ -48,7 +53,7 @@ comparaison:
   }else{
     say "Hé non."
     do count = count - 1
-    say Image("https://github.com/aliceKatkout/portfolio/blob/main/images/oeil1.png?raw=true")
+    say Image("https://github.com/adatechschool/pc-csml-love-is-here/blob/main/images/pendu/pendu{{count}}.jpg?raw=true")
   }
   foreach (val, index) in mot {
     if (lettre == val){
