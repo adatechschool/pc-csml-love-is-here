@@ -12,3 +12,16 @@ reste à faire :
 3) ajout de if input = mot.join(" ").to_string goto win
 
 4) mise en place et decoupage pour le niveau 2
+
+JOUR 2
+Fait today:
+- Retour sur le code du jour 1 avec explications
+- Analyse du niveau 2
+- Organisation des étapes
+- Répartition des tâches en deux groupes: API giphy et API blablague.net
+
+Demain:
+- Retour  sur le code du jour 2
+- Trouver comment passer d'un flow à un autre
+- Refactoring: ex. ne pas demander le prénom 3 fois
+- Découpage du niveau 3
