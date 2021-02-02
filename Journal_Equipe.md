@@ -14,6 +14,7 @@ reste à faire :
 4) mise en place et decoupage pour le niveau 2
 
 JOUR 2
+
 Fait today:
 - Retour sur le code du jour 1 avec explications
 - Analyse du niveau 2
