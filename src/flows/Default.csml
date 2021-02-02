@@ -6,17 +6,17 @@ start:
 say Typing(1000)
 say Question(
     "Bonjour {{username}}, veux tu jouer au pendu avec moi ?",
-    buttons=[Button("Yes"), Button("Non")])
+    buttons=[Button("Oui"), Button("Non")])
     hold
-  if (event == "Yes") {
+  if (event == "Oui") {
       say "C'est parti!"
       goto penduInit
   }else{
        say "Oh le mauvais joueur!"
   }
 
-
 penduInit:
+  say Typing(1000)
   say "Je choisis un mot ... "
   do listeMot = ["C U I S I N E", "C H A T B O T", "O R D I N A T E U R", "A E R O P O R T", "P A P I L L O N"]
   remember mot = OneOf(listeMot) // mot au hasard 
@@ -36,10 +36,12 @@ bonnelettre:
   say "Choisis une lettre !"
   say "Il te reste {{count}} tentative(s) ..."
   hold
-  remember lettre = event
-  if (lettre.match_regex ("[[:alpha:]]")){
-    say "ok"
+  remember lettre = event.to_uppercase()
+  if (lettre.match_regex ("[[:alpha:]]") && lettre.length()==1){
     goto comparaison
+  } else if (lettre == mot.join("").to_string()) {
+    say "Wouah quelle perspicacité !"
+    goto win
   } else {
     say "T'as pas compris ?"
     goto bonnelettre
