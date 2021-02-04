@@ -37,4 +37,5 @@ Reste a faire:
 - Bonus: Api mcDo ?
 - Déployer
 - Rajout d'émoji partout
+- Scrappeur
  
