@@ -39,3 +39,9 @@ Reste a faire:
 - Rajout d'émoji partout
 - Scrappeur
  
+ LUNDI 8 FEVRIER
+
+ - finir le flow femmes illustres (finir les boutons indices)
+ - relier tout les flows
+ - commencer le bot vaccination avec CSV (https://www.bennadel.com/blog/1504-ask-ben-parsing-csv-strings-with-javascript-exec-regular-expression-command.htm)
+
