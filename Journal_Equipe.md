@@ -26,3 +26,16 @@ Demain:
 - Trouver comment passer d'un flow à un autre
 - Refactoring: ex. ne pas demander le prénom 3 fois
 - Découpage du niveau 3
+
+JOUR 4
+
+Bilan:
+Reste a faire:
+- Experience Utilisateur
+- Finir Arborense et parcours des femmes illustres = trouver moyen d'afficher un chemin google maps
+- Rajout d'une fonction acrostiche
+- Bonus: Api mcDo ?
+- Déployer
+- Rajout d'émoji partout
+- Scrappeur
+ 
