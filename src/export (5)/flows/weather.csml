@@ -1,0 +1,18 @@
+start:
+  say Typing(1000)
+  say "Dans quelle ville te trouve tu ?"
+  hold
+  remember city = event
+  do req = HTTP("https://api.openweathermap.org/data/2.5/weather?q={{city}}&appid=7b7fccc59b0e3578ffcf3a8e5693c318&units=metric&lang=fr")
+  // request URL vers API GIPHY
+  do reqGet = req.get()
+  // aller chercher dans API GIPHY
+  do res = reqGet.send()
+  // réponse qui sera renvoyé selon la requête
+  do meteo = res.weather[0].description
+  do temp = res.main.temp
+  do tempmax = res.main.temp_max
+  do hum = res.main.humidity
+  say "Le temps est {{meteo}} a {{city}}"
+  say "La temperature actuelle est de {{temp}} degrés, il fera jusqu’à {{tempmax}} degrés  aujourd’hui <br> l'humidité est de {{hum}}%"
+  goto choice@Default

@@ -1,0 +1,111 @@
+start:
+  say Typing(1000)
+  say Question(
+	title = "Veux tu voir des arbres remarquables ?",
+	buttons = [
+	  Button("Oui"),
+	  Button("Non")
+	]
+  )
+  hold
+  if(event == "Oui") {
+	say Typing(1000)
+	say "C'est parti !"
+	goto run
+  }else {
+	say Typing(1000)
+	say "Oh le petit con !"
+	goto run
+  }
+run:
+  say Typing(1000)
+  say "Quelle est ton adresse ?"
+  hold
+  remember address = event
+  if(address.contains_regex("\d+")){//\s[A-z]+\s[A-z]+.+")){
+	goto getLocation
+  }else {
+	say "Adresse invalide !"
+  goto run
+  }
+getLocation:
+  do req = HTTP("https://opendata.paris.fr/api/records/1.0/search/?dataset=adresse_paris&q={{address}}").get()
+  do res = req.send()
+  do gps = res.records[0].fields.geom_x_y
+  if (gps.length()<1){say "Adresse invalide !" goto run}
+  remember gps_x = gps[0]
+  remember gps_y = gps[1]
+  remember dist = 500
+  goto getTrees
+getTrees:
+  do req = HTTP("https://opendata.paris.fr/api/records/1.0/search/?dataset=arbresremarquablesparis&q=%23distance(location%2C+%22{{gps_x}}%2C+{{gps_y}}%22%2C+{{dist}})&facet=genre&facet=espece&facet=stadedeveloppement&facet=varieteoucultivar&facet=dateplantation&facet=libellefrancais").get()
+  do res = req.send()
+  remember trees = res.records
+  remember n = 0
+  if (trees.length() < 1){
+    say Question(
+	     title = "Y'a pas d'arbres autour de toi, t'es prêt à marcher un peu ?",
+	    buttons = [
+	    Button("Allez... "),
+	    Button("No sors moi de là les arbres c'est surcôté")
+	     ]
+     )
+     hold
+      if (event == "Allez... "){
+      do dist = dist+500
+      goto getTrees
+      } else {
+        say "Adieu le royaume végétal"
+        goto @Default
+      }
+  }
+goto dataTrees
+dataTrees:
+say "Il y a {{trees.length()}} arbre(s) remarquable(s) autour de toi !"
+  remember nomArbre = trees[n].fields.libellefrancais
+  remember tailleArbre = trees[n].fields.hauteurenm
+  remember adresseArbre = trees[n].fields.adresse
+goto talkTrees
+talkTrees:
+if (trees.length() > 0){
+  say "Il y a un super {{nomArbre}} de {{tailleArbre}} mètres de hauteur à moins de {{dist}} mètres de toi !"
+  say Question(
+	  title = "Tu veux l'adresse de cet incroyable végétal ?",
+	  buttons = [
+	    Button("Avec plaisir ! "),
+	    Button("Y'en a pas un autre ?")
+	  ]
+  )
+  hold
+  if (event == "Avec plaisir ! "){
+	  say "Voici l'adresse : {{adresseArbre}}"
+    remember geoTree = trees[n].fields.geom_x_y
+    remember tree_x = geoTree[0]
+    remember tree_y = geoTree[1]
+    say "Et voici le chemin 😉"
+    say "https://www.openstreetmap.org/directions?engine=graphhopper_foot&route={{gps_x}}%2C{{gps_y}}%3B{{tree_x}}%2C{{tree_y}}#map=14/48.8670/2.3538"
+    goto @Default
+  }else{
+	  say "Attend je regarde"
+    if (trees.length()>1 && n<trees.length()){
+     remember n = n+1
+     goto dataTrees
+    } else {
+      say Question(
+	     title = "Y'a pas d'arbres autour de toi, t'es prêt à marcher un peu plus ?",
+	    buttons = [
+	    Button("Allez... "),
+	    Button("No sors moi de là les arbres c'est surcôté")
+	     ]
+     )
+     hold
+      if (event == "Allez... "){
+      do dist = dist+500
+      goto getTrees
+      } else {
+        say "Adieu le royaume végétal"
+        goto @Default
+      }
+    }
+  }
+} 

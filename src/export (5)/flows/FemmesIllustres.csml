@@ -1,0 +1,60 @@
+start:
+say Typing(1000)
+say Question (“Hey you, ça te dirait de tester ta culture G ? “,
+buttons = [Button(“Pourquoi pas!“) as btnOui,
+Button(“Non non non non!“) as btnNon]
+)
+hold
+remember answer = event
+say Typing(1000)
+if (answer match btnOui) {
+  say “Here we gooo!”
+  goto request
+} else {
+  say “Retour à la case départ!”
+  //goto choice@Default
+  goto request
+}
+request:
+  do n = OneOf([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+  do req = HTTP(“https://opendata.paris.fr/api/records/1.0/search/?dataset=femmes-illustres-a-paris-portraits&q=femme&facet=name&facet=tab_name&facet=short_desc”)
+  do req = req.get()
+  do res = req.send()
+  //say Debug(res.records[n])
+  do femme0 = res.records[n]
+  do test = femme0.fields.name
+  say Debug(test)
+  do desc2 = femme0.fields.desc2
+  do imgFem = femme0.fields.thumb_url
+  say Image(imgFem)
+  say Typing(1000)
+  say Question (“Qui suis-je? “,
+buttons = [Button(“Une idée ?“) as btnIdea,
+Button(“Un indice ?“) as btnHint]
+)
+hold
+remember response = event
+say Typing(1000)
+if (response match btnIdea) {
+  say “Saisie ta réponse:”
+  hold
+  remember name = event
+  if (name == test.to_string()) {
+    say “Bravo!”
+  }
+  else {
+    say Question (“Et non! “,
+buttons = [Button(“Un petit indice ?“) as btnHint,
+Button(“La réponse ?“) as btnAnswer]
+)
+  hold
+  remember lastChance = event
+  if (lastChance match btnHint){
+    say desc2
+  } else {
+    say test.to_string()
+  }
+  }
+} else {
+  say desc2
+}

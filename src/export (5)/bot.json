@@ -1,0 +1,41 @@
+{
+  "id": "891f0d33-bd50-490d-a2b1-8eb4ff515836",
+  "name": "3in1",
+  "description": null,
+  "default_flow": "Default",
+  "flows": [
+    {
+      "name": "arbres",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    },
+    {
+      "name": "Default",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    },
+    {
+      "name": "FemmesIllustres",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    },
+    {
+      "name": "OffensiveBot",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    },
+    {
+      "name": "randomGiF",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    },
+    {
+      "name": "weather",
+      "description": "Simple barebones flow. Code your own chatbot from this template!",
+      "commands": []
+    }
+  ],
+  "files": [],
+  "functions": [],
+  "apps": []
+}
